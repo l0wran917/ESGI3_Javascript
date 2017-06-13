@@ -1,0 +1,51 @@
+body{
+    background-color: coral;
+}
+
+#rail{
+    width: 3200px;
+}
+
+#slideshow{
+    position: relative;
+    width: 800px;
+    overflow: hidden;
+}
+
+#loading, img{
+    width: 800px;
+}
+
+#loading{
+    background-color: rgba(120, 120, 120);
+}
+
+#data{
+    position: absolute;
+    bottom: 20px;
+    left: 25px;
+    width: 100%;
+
+    color: #fff;
+}
+
+/* --- */
+@keyframes spinner {
+    to {transform: rotate(360deg);}
+}
+
+.spinner:before {
+    content: '';
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -10px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    border-top-color: #333;
+    animation: spinner .6s linear infinite;
+}
