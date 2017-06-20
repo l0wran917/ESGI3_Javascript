@@ -1,80 +1,105 @@
 var url = "https://www.skrzypczyk.fr/slideshow.php";
+var compressUrl = 'https://img.gs/zqxmjnbkgf/full/';
+var transitionSpeed = 2000;
+var displayTime = 2000;
 
 // -----------
 var timer = null;
 var photos = [];
+var loadedCount = 0;
+var current = 0;
 
-function stopTimer(){
+
+function getPicturesData() {
+    $.getJSON(url, function (data) {
+        for(var i = 0 ; i < data.length ; i++){
+            $("#dots ul").append($("<li/>"));
+        }
+
+        data.forEach(function(photo){
+            var url = compressUrl + photo.url;
+
+            $("<img />").attr('src', url).on('load', function(){
+
+                var image = $('<div />', {
+                    alt: photo.desc,
+                    class: 'image',
+                    style: 'opacity: 0;background-image: url(' + url + ')'
+                });
+                photos.push(photo);
+
+                $("#rail").append(image);
+
+                $(image).stop().animate({
+                    opacity : 1
+                }, 1000);
+                $("#loading").hide();
+
+                if(!timer){
+                    startTimer();
+                    changeActiveDot();
+                    $("#data .title").text(photo.title);
+                    $("#data .description").text(photo.desc);
+                }
+            });
+        });
+
+    }, function () {
+        console.log('ERREUR 01');
+    });
+}
+
+function startTimer() {
+    timer = setInterval(moveNext, transitionSpeed + displayTime);
+}
+
+function stopTimer() {
     clearInterval(timer);
+    timer = null;
 }
 
-function startTimer(){
-    timer = setInterval(moveNext, 2000);
+function changeActiveDot(){
+    $("#dots li.active").removeClass("active");
+    current = (current + 1) % photos.length;
+    $($("#dots li")[current]).addClass("active");
 }
 
-function moveNext(){
-    var imageWidth = $("img").width();
-    $("#rail").animate({"margin-left": -imageWidth}, 750, changeImageOrder);
+function moveNext() {
+    changeActiveDot()
+    var imageWidth = $(".image").width();
+    $("#rail").stop().animate({"margin-left": -imageWidth}, transitionSpeed, changeImageOrder);
+
+    $("#data .title").animate({"left": imageWidth, "opacity": 0}, (transitionSpeed/4)*3, function(){
+        $("#data .title").css({"left": -150});
+        $("#data .title").animate({"left": 25, "opacity": 1}, transitionSpeed/5);
+    });
+
+    $("#data .description").animate({"left": imageWidth, "opacity": 0}, (transitionSpeed/5)*4, function(){
+        $("#data .description").css({"left": -150});
+        $("#data .description").animate({"left": 25, "opacity": 1}, transitionSpeed/4);
+    });
+
+    $("#data .title").text(photos[current].title);
+    $("#data .description").text(photos[current].desc);
 }
 
-function changeImageOrder(){
-    $("#rail img:last").after($("#rail img:first"));
+function changeImageOrder() {
+    $("#rail .image:last").after($("#rail .image:first"));
     $("#rail").css({'margin-left': "0"});
 }
 
-function loadPictures(){
-
-    $.getJSON(url, function(data){
-        photos = data;
-
-        $.each(photos, function(key, value){
-            if(value.title != 'La pierre'){
-                addPicture(value);
-            }
-        })
-
-    }, function(){
-        alert('ERREUR'); // TODO
-    });
-
-}
-
-function addPicture(data){
-    var image = $('<img />', {
-        src: data.url,
-        alt: data.desc,
-        style: 'opacity:0.5'
-    });
-
-    image.css({
-        'opacity':0
-    });
-
-    $("#rail").append(image);
-
-    $("#slideshow #rail img:first").on('load', function(){
-        $(image).animate({'opacity':'1'}, 1500);
-        $("#loading").remove();
-        $("#data .title").text(photos[0].title);
-        $("#data .description").text(photos[0].desc);
-
-        // TODO set events here (only once)
-    })
-}
-
-$("#slideshow").mouseover(function(){
+$("#slideshow").mouseover(function () {
     stopTimer();
     $("#overlay").stop().animate({
-        'opacity':'0.4'
+        'opacity': '0.4'
     }, 500);
 });
 
-$("#slideshow").mouseout(function(){
-    console.log('test');
+$("#slideshow").mouseout(function () {
     startTimer();
     $("#overlay").stop().animate({
-        'opacity':'1'
+        'opacity': '1'
     }, 500);
 });
 
-loadPictures();
+getPicturesData();
