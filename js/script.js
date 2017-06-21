@@ -50,10 +50,12 @@ function getPicturesData() {
 }
 
 function startTimer() {
+    console.log("start");
     timer = setInterval(moveNext, transitionSpeed + displayTime);
 }
 
 function stopTimer() {
+    console.log("stop");
     clearInterval(timer);
     timer = null;
 }
@@ -90,9 +92,6 @@ function changeImageOrder() {
 
 $("#slideshow").mouseover(function () {
     stopTimer();
-    $("#overlay").stop().animate({
-        'opacity': '0.4'
-    }, 500);
 });
 
 $("#slideshow").mouseout(function () {
@@ -100,6 +99,10 @@ $("#slideshow").mouseout(function () {
     $("#overlay").stop().animate({
         'opacity': '1'
     }, 500);
+});
+
+$("#control .right").click(function(){
+   moveNext();
 });
 
 getPicturesData();
