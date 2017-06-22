@@ -12,14 +12,14 @@ var current = 0;
 
 function getPicturesData() {
     $.getJSON(url, function (data) {
-        for(var i = 0 ; i < data.length ; i++){
+        for (var i = 0; i < data.length; i++) {
             $("#dots ul").append($("<li/>"));
         }
 
-        data.forEach(function(photo){
+        data.forEach(function (photo) {
             var url = compressUrl + photo.url;
 
-            $("<img />").attr('src', url).on('load', function(){
+            $("<img />").attr('src', url).on('load', function () {
 
                 var image = $('<div />', {
                     alt: photo.desc,
@@ -31,11 +31,11 @@ function getPicturesData() {
                 $("#rail").append(image);
 
                 $(image).stop().animate({
-                    opacity : 1
+                    opacity: 1
                 }, 1000);
                 $("#loading").hide();
 
-                if(!timer){
+                if (!timer) {
                     startTimer();
                     changeActiveDot();
                     $("#data .title").text(photo.title);
@@ -60,29 +60,45 @@ function stopTimer() {
     timer = null;
 }
 
-function changeActiveDot(){
+function changeActiveDot(direction) {
+    direction = (direction ? direction : 1);
+    current = (current + direction) % photos.length;
+
+    current = (current < 0 ? current + photos.length : current);
+
     $("#dots li.active").removeClass("active");
-    current = (current + 1) % photos.length;
     $($("#dots li")[current]).addClass("active");
+
+    console.log(current);
 }
 
 function moveNext() {
-    changeActiveDot()
+    changeActiveDot(1);
     var imageWidth = $(".image").width();
     $("#rail").stop().animate({"margin-left": -imageWidth}, transitionSpeed, changeImageOrder);
 
-    $("#data .title").animate({"left": imageWidth, "opacity": 0}, (transitionSpeed/4)*3, function(){
+    $("#data .title").animate({"left": imageWidth, "opacity": 0}, (transitionSpeed / 4) * 3, function () {
         $("#data .title").css({"left": -150});
-        $("#data .title").animate({"left": 25, "opacity": 1}, transitionSpeed/5);
+        $("#data .title").animate({"left": 25, "opacity": 1}, transitionSpeed / 5);
     });
 
-    $("#data .description").animate({"left": imageWidth, "opacity": 0}, (transitionSpeed/5)*4, function(){
+    $("#data .description").animate({"left": imageWidth, "opacity": 0}, (transitionSpeed / 5) * 4, function () {
         $("#data .description").css({"left": -150});
-        $("#data .description").animate({"left": 25, "opacity": 1}, transitionSpeed/4);
+        $("#data .description").animate({"left": 25, "opacity": 1}, transitionSpeed / 4);
     });
 
     $("#data .title").text(photos[current].title);
     $("#data .description").text(photos[current].desc);
+}
+
+function movePrevious() {
+    changeActiveDot(-1);
+    var imageWidth = $(".image").width();
+    $("#rail .image:last").insertBefore($("#rail .image:first"));
+
+    $("#rail").css({'margin-left': -imageWidth});
+    $("#rail").stop().animate({"margin-left": 0}, transitionSpeed);
+
 }
 
 function changeImageOrder() {
@@ -101,8 +117,7 @@ $("#slideshow").mouseout(function () {
     }, 500);
 });
 
-$("#control .right").click(function(){
-   moveNext();
-});
+$("#control .right").click(moveNext);
+$("#control .left").click(movePrevious);
 
 getPicturesData();
