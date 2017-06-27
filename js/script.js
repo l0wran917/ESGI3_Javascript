@@ -5,8 +5,8 @@ var displayTime = 2000;
 
 // -----------
 var timer = null;
+var stop = false;
 var photos = [];
-var loadedCount = 0;
 var current = 0;
 
 
@@ -50,12 +50,12 @@ function getPicturesData() {
 }
 
 function startTimer() {
-    console.log("start");
-    timer = setInterval(moveNext, transitionSpeed + displayTime);
+    if (!timer) {
+        timer = setInterval(moveNext, transitionSpeed + displayTime);
+    }
 }
 
 function stopTimer() {
-    console.log("stop");
     clearInterval(timer);
     timer = null;
 }
@@ -68,8 +68,6 @@ function changeActiveDot(direction) {
 
     $("#dots li.active").removeClass("active");
     $($("#dots li")[current]).addClass("active");
-
-    console.log(current);
 }
 
 function moveNext() {
@@ -77,14 +75,14 @@ function moveNext() {
     var imageWidth = $(".image").width();
     $("#rail").stop().animate({"margin-left": -imageWidth}, transitionSpeed, changeImageOrder);
 
-    $("#data .title").animate({"left": imageWidth, "opacity": 0}, (transitionSpeed / 4) * 3, function () {
+    $("#data .title").stop().animate({"left": imageWidth, "opacity": 0}, (transitionSpeed / 4) * 3, function () {
         $("#data .title").css({"left": -150});
-        $("#data .title").animate({"left": 25, "opacity": 1}, transitionSpeed / 5);
+        $("#data .title").stop().animate({"left": 25, "opacity": 1}, transitionSpeed / 5);
     });
 
-    $("#data .description").animate({"left": imageWidth, "opacity": 0}, (transitionSpeed / 5) * 4, function () {
+    $("#data .description").stop().animate({"left": imageWidth, "opacity": 0}, (transitionSpeed / 5) * 4, function () {
         $("#data .description").css({"left": -150});
-        $("#data .description").animate({"left": 25, "opacity": 1}, transitionSpeed / 4);
+        $("#data .description").stop().animate({"left": 25, "opacity": 1}, transitionSpeed / 4);
     });
 
     $("#data .title").text(photos[current].title);
@@ -111,13 +109,28 @@ $("#slideshow").mouseover(function () {
 });
 
 $("#slideshow").mouseout(function () {
-    startTimer();
-    $("#overlay").stop().animate({
-        'opacity': '1'
-    }, 500);
+    if (!stop) {
+        startTimer();
+        $("#overlay").stop().animate({
+            'opacity': '1'
+        }, 500);
+    }
 });
 
 $("#control .right").click(moveNext);
 $("#control .left").click(movePrevious);
+
+$("#pause").click(function () {
+
+    $("#pause i").toggleClass('fa-pause');
+    $("#pause i").toggleClass('fa-play');
+
+    stop = !stop;
+    if (stop) {
+        stopTimer();
+    }else{
+        startTimer();
+    }
+});
 
 getPicturesData();

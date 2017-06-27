@@ -68,6 +68,20 @@ body {
     background-color: rgb(120, 120, 120);
 }
 
+#pause {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    z-index: 4;
+    color: rgba(200, 200, 200, 0.4);
+    text-shadow: -1px 0 rgba(255, 255, 255, 0.6),
+        0 1px rgba(255, 255, 255, 0.6),
+        1px 0 rgba(255, 255, 255, 0.6),
+        0 -1px rgba(255, 255, 255, 0.6);
+    background-color: red;
+    padding: 6px;
+}
+
 #data .title {
     position: absolute;
     bottom: 72px;
@@ -94,21 +108,21 @@ body {
 
 #control {
     position: absolute;
-    z-index:3;
+    z-index: 3;
     top: 0;
     height: 400px;
     width: 100%;
     font-size: 160%;
     color: rgba(200, 200, 200, 0.4);
     text-shadow: -1px 0 rgba(255, 255, 255, 0.6),
-        0 1px rgba(255, 255, 255, 0.6),
-        1px 0 rgba(255, 255, 255, 0.6),
-        0 -1px rgba(255, 255, 255, 0.6);
+    0 1px rgba(255, 255, 255, 0.6),
+    1px 0 rgba(255, 255, 255, 0.6),
+    0 -1px rgba(255, 255, 255, 0.6);
     opacity: 0;
     transition: opacity 0.5s;
 }
 
-#control:hover{
+#control:hover {
     opacity: 1;
 }
 
