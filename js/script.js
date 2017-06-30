@@ -61,16 +61,27 @@ function stopTimer() {
 }
 
 function changeActiveDot(direction) {
+    if($("#rail").is(':animated')){
+        return false;
+    }
+
     direction = (direction ? direction : 1);
     current = (current + direction) % photos.length;
 
     current = (current < 0 ? current + photos.length : current);
+
+    $("#data .title").text(photos[current].title);
+    $("#data .description").text(photos[current].desc);
 
     $("#dots li.active").removeClass("active");
     $($("#dots li")[current]).addClass("active");
 }
 
 function moveNext() {
+    if($("#rail").is(':animated')){
+        return false;
+    }
+
     changeActiveDot(1);
     var imageWidth = $(".image").width();
     $("#rail").stop().animate({"margin-left": -imageWidth}, transitionSpeed, changeImageOrder);
@@ -84,18 +95,30 @@ function moveNext() {
         $("#data .description").css({"left": -150});
         $("#data .description").stop().animate({"left": 25, "opacity": 1}, transitionSpeed / 4);
     });
-
-    $("#data .title").text(photos[current].title);
-    $("#data .description").text(photos[current].desc);
 }
 
 function movePrevious() {
+    if($("#rail").is(':animated')){
+        return false;
+    }
+
     changeActiveDot(-1);
     var imageWidth = $(".image").width();
     $("#rail .image:last").insertBefore($("#rail .image:first"));
 
     $("#rail").css({'margin-left': -imageWidth});
     $("#rail").stop().animate({"margin-left": 0}, transitionSpeed);
+
+    var textWidth = $("#data .description").width();
+    $("#data .description").stop().animate({"left": -textWidth, "opacity": 0}, transitionSpeed / 5, function(){
+        $("#data .description").css({"left": imageWidth});
+        $("#data .description").stop().animate({"left": 25, "opacity": 1}, (transitionSpeed / 4) * 3);
+    });
+
+    $("#data .title").stop().animate({"left": -textWidth, "opacity": 0}, transitionSpeed / 4, function(){
+        $("#data .title").css({"left": imageWidth});
+        $("#data .title").stop().animate({"left": 25, "opacity": 1}, (transitionSpeed / 5) * 4);
+    });
 
 }
 
