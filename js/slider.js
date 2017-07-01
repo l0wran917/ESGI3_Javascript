@@ -1,9 +1,9 @@
 var url = "https://www.skrzypczyk.fr/slideshow.php";
-var compressUrl = 'https://img.gs/zqxmjnbkgf/full/';
 var transitionSpeed = 2000;
 var displayTime = 1000;
 
 // -----------
+var compressUrl = 'https://img.gs/zqxmjnbkgf/full/';
 var timer = null;
 var stop = false;
 var photos = [];
@@ -20,7 +20,7 @@ function getPicturesData() {
         $("#dots li").on('click', dotsEvent);
         $("#dots li:first-child").addClass('active');
 
-        var marginLeft = parseInt(data.length/2) * ($("#dots li:first-child").width() + 4);
+        var marginLeft = parseInt(data.length / 2) * ($("#dots li:first-child").width() + 4);
         $("#dots").css({'margin-left': '-' + marginLeft + 'px'});
 
         data.forEach(function (photo) {
@@ -141,9 +141,9 @@ function dotsEvent() {
     var oldDisplayTime = displayTime;
     transitionSpeed = 250;
     displayTime = 0;
-    nextTimer = setInterval(function(){
+    nextTimer = setInterval(function () {
         moveNext();
-        if(current === parseInt(target)){
+        if (current === parseInt(target)) {
             transitionSpeed = oldTransitionSpeed;
             displayTime = oldDisplayTime;
             clearInterval(nextTimer);
