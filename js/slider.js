@@ -1,7 +1,7 @@
 var url = "https://www.skrzypczyk.fr/slideshow.php";
 var compressUrl = 'https://img.gs/zqxmjnbkgf/full/';
 var transitionSpeed = 2000;
-var displayTime = 2000;
+var displayTime = 1000;
 
 // -----------
 var timer = null;
@@ -9,12 +9,16 @@ var stop = false;
 var photos = [];
 var current = 0;
 
-
 function getPicturesData() {
     $.getJSON(url, function (data) {
         for (var i = 0; i < data.length; i++) {
-            $("#dots ul").append($("<li/>"));
+            var dot = $("<li/>");
+            dot.attr('data-id', i);
+            $("#dots ul").append(dot);
         }
+
+        $("#dots li").on('click', dotsEvent);
+        $("#dots li:first-child").addClass('active');
 
         data.forEach(function (photo) {
             var url = compressUrl + photo.url;
@@ -51,7 +55,7 @@ function getPicturesData() {
 
 function startTimer() {
     if (!timer) {
-        timer = setInterval(moveNext, transitionSpeed + displayTime);
+        timer = setInterval(moveNext, displayTime);
     }
 }
 
@@ -61,7 +65,7 @@ function stopTimer() {
 }
 
 function changeActiveDot(direction) {
-    if($("#rail").is(':animated')){
+    if ($("#rail").is(':animated') || photos.length <= 1) {
         return false;
     }
 
@@ -78,7 +82,7 @@ function changeActiveDot(direction) {
 }
 
 function moveNext() {
-    if($("#rail").is(':animated')){
+    if ($("#rail").is(':animated') || photos.length <= 1) {
         return false;
     }
 
@@ -98,7 +102,7 @@ function moveNext() {
 }
 
 function movePrevious() {
-    if($("#rail").is(':animated')){
+    if ($("#rail").is(':animated') || photos.length <= 1) {
         return false;
     }
 
@@ -110,12 +114,12 @@ function movePrevious() {
     $("#rail").stop().animate({"margin-left": 0}, transitionSpeed);
 
     var textWidth = $("#data .description").width();
-    $("#data .description").stop().animate({"left": -textWidth, "opacity": 0}, transitionSpeed / 5, function(){
+    $("#data .description").stop().animate({"left": -textWidth, "opacity": 0}, transitionSpeed / 5, function () {
         $("#data .description").css({"left": imageWidth});
         $("#data .description").stop().animate({"left": 25, "opacity": 1}, (transitionSpeed / 4) * 3);
     });
 
-    $("#data .title").stop().animate({"left": -textWidth, "opacity": 0}, transitionSpeed / 4, function(){
+    $("#data .title").stop().animate({"left": -textWidth, "opacity": 0}, transitionSpeed / 4, function () {
         $("#data .title").css({"left": imageWidth});
         $("#data .title").stop().animate({"left": 25, "opacity": 1}, (transitionSpeed / 5) * 4);
     });
@@ -151,9 +155,26 @@ $("#pause").click(function () {
     stop = !stop;
     if (stop) {
         stopTimer();
-    }else{
+    } else {
         startTimer();
     }
 });
+
+function dotsEvent() {
+    var target = $(this).attr('data-id');
+    var nextTimer = null;
+    var oldTransitionSpeed = transitionSpeed;
+    var oldDisplayTime = displayTime;
+    transitionSpeed = 250;
+    displayTime = 0;
+    nextTimer = setInterval(function(){
+        moveNext();
+        if(current === parseInt(target)){
+            transitionSpeed = oldTransitionSpeed;
+            displayTime = oldDisplayTime;
+            clearInterval(nextTimer);
+        }
+    }, 150);
+}
 
 getPicturesData();

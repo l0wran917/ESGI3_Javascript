@@ -25,16 +25,19 @@ body {
 }
 
 #slideshow #dots {
-    width: 100%;
+    transform: translate(368px, 0);
     height: 24px;
     line-height: 24px;
     position: absolute;
-    z-index: 2;
+    z-index: 4;
     bottom: 0;
+    text-align: center;
     margin-bottom: 32px;
 }
 
 #slideshow #dots ul {
+    position: relative;
+    z-index: 4;
     list-style: none;
     line-height: 24px;
     height: 24px;
@@ -50,6 +53,7 @@ body {
     border-radius: 12px;
     display: inline-block;
     margin-right: 4px;
+    cursor: pointer;
 }
 
 #slideshow #dots ul li:last-child {
