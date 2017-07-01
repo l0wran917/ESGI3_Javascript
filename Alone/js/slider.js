@@ -20,6 +20,9 @@ function getPicturesData() {
         $("#dots li").on('click', dotsEvent);
         $("#dots li:first-child").addClass('active');
 
+        var marginLeft = parseInt(data.length/2) * ($("#dots li:first-child").width() + 4);
+        $("#dots").css({'margin-left': '-' + marginLeft + 'px'});
+
         data.forEach(function (photo) {
             var url = compressUrl + photo.url;
 
@@ -131,6 +134,23 @@ function changeImageOrder() {
     $("#rail").css({'margin-left': "0"});
 }
 
+function dotsEvent() {
+    var target = $(this).attr('data-id');
+    var nextTimer = null;
+    var oldTransitionSpeed = transitionSpeed;
+    var oldDisplayTime = displayTime;
+    transitionSpeed = 250;
+    displayTime = 0;
+    nextTimer = setInterval(function(){
+        moveNext();
+        if(current === parseInt(target)){
+            transitionSpeed = oldTransitionSpeed;
+            displayTime = oldDisplayTime;
+            clearInterval(nextTimer);
+        }
+    }, 150);
+}
+
 $("#slideshow").mouseover(function () {
     stopTimer();
 });
@@ -159,22 +179,5 @@ $("#pause").click(function () {
         startTimer();
     }
 });
-
-function dotsEvent() {
-    var target = $(this).attr('data-id');
-    var nextTimer = null;
-    var oldTransitionSpeed = transitionSpeed;
-    var oldDisplayTime = displayTime;
-    transitionSpeed = 250;
-    displayTime = 0;
-    nextTimer = setInterval(function(){
-        moveNext();
-        if(current === parseInt(target)){
-            transitionSpeed = oldTransitionSpeed;
-            displayTime = oldDisplayTime;
-            clearInterval(nextTimer);
-        }
-    }, 150);
-}
 
 getPicturesData();

@@ -1,7 +1,3 @@
-body {
-    background-color: coral;
-}
-
 #rail {
     width: 3200px;
 }
@@ -9,11 +5,16 @@ body {
 #slideshow {
     position: relative;
     width: 800px;
+    height: 400px;
     overflow: hidden;
     margin: auto;
 
+    border: 1px solid #cdccc7;
+    box-sizing: border-box;
+
     font-size: 120%;
     font-family: 'Bubbler One', sans-serif;
+    transition: all .5s ease-in-out;
 }
 
 #slideshow .image {
@@ -25,14 +26,15 @@ body {
 }
 
 #slideshow #dots {
-    transform: translate(368px, 0);
+    transition: all .5s ease;
+    transform: translate(400px, 0);
     height: 24px;
     line-height: 24px;
     position: absolute;
     z-index: 4;
     bottom: 0;
     text-align: center;
-    margin-bottom: 32px;
+    margin-bottom: 24px;
 }
 
 #slideshow #dots ul {
@@ -79,9 +81,9 @@ body {
     z-index: 4;
     color: rgba(200, 200, 200, 0.4);
     text-shadow: -1px 0 rgba(255, 255, 255, 0.6),
-        0 1px rgba(255, 255, 255, 0.6),
-        1px 0 rgba(255, 255, 255, 0.6),
-        0 -1px rgba(255, 255, 255, 0.6);
+    0 1px rgba(255, 255, 255, 0.6),
+    1px 0 rgba(255, 255, 255, 0.6),
+    0 -1px rgba(255, 255, 255, 0.6);
     padding: 6px;
 }
 
@@ -175,4 +177,77 @@ body {
     border: 2px solid #ccc;
     border-top-color: #333;
     animation: spinner .6s linear infinite;
+}
+
+@media (max-width: 850px) {
+    #slideshow{
+        width: 550px;
+    }
+
+    #slideshow .image{
+        width: 550px;
+    }
+
+    #control .left{
+        width: 172px;
+    }
+
+    #control .right{
+        width: 172px;
+    }
+
+    #slideshow #dots{
+        transform: translate(275px, 0);
+    }
+}
+
+@media (max-width: 600px) {
+    #slideshow{
+        width: 350px;
+        height: 300px;
+    }
+
+    #slideshow .image{
+        width: 350px;
+        height: 300px;
+    }
+
+    #control .left{
+        width: 110px;
+        height: 300px;
+    }
+
+    #control .right{
+        width: 110px;
+        height: 300px;
+    }
+
+    #slideshow #dots{
+        transform: translate(175px, 0);
+    }
+}
+
+
+@media (max-width: 400px) {
+    #slideshow{
+        width: 275px;
+        height: 300px;
+    }
+
+    #slideshow .image{
+        width: 275px;
+        height: 300px;
+    }
+
+    #control .left{
+        width: 86px;
+    }
+
+    #control .right{
+        width: 86px;
+    }
+
+    #slideshow #dots{
+        transform: translate(137px, 0);
+    }
 }

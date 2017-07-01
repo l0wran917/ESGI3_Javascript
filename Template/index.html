@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="Acceuil de mon site web portfolio">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Laurent Bassin - Acceuil</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Droid+Sans:400,700|Droid+Serif:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Bubbler+One" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/slider.css">
+</head>
+<body>
+
+<header>
+    <nav>
+        <div class="logo conteneur-left">
+            <a href="index.html">
+                <img src="img/logo.png" alt="Logo de Laurent Bassin">
+            </a>
+        </div>
+        <ul class="conteneur-right menu-desktop">
+            <a href="#" title="lien">
+                <li class="active">Accueil</li>
+            </a>
+            <a href="#" title="lien">
+                <li>Compétences</li>
+            </a>
+            <a href="#" title="lien">
+                <li>Portfolio</li>
+            </a>
+            <a href="#" title="lien">
+                <li>Contact</li>
+            </a>
+        </ul>
+        <div class="menu-phone conteneur-right">
+            <i class="fa fa-bars custom" aria-hidden="true"></i>
+            <ul class="menu-phone-content">
+                <li class="active"><a href="index.html">Accueil</a></li>
+                <li><a href="competences.html">Compétences</a></li>
+                <li><a href="portfolio.html">Portfolio</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<div class="container">
+
+    <h1>Lorem Ipseum Dolor</h1>
+    <section class="une-col">
+        <article class="conteneur-center">
+                <!-- #################### -->
+                <div id="slideshow">
+                    <div id="dots">
+                        <ul>
+                        </ul>
+                    </div>
+                    <div id="control">
+                        <div class="right"><i class="fa fa-arrow-right" aria-hidden="true"></i></div>
+                        <div class="left"><i class="fa fa-arrow-left" aria-hidden="true"></i></div>
+                    </div>
+                    <div id="pause"><i class="fa fa-pause" aria-hidden="true"></i></div>
+                    <div id="overlay">
+                        <div id="rail">
+                            <div id="loading">
+                                <div class="spinner"></div>
+                            </div>
+                        </div>
+                        <div id="data">
+                            <p class="title"></p>
+                            <p class="description"></p>
+                        </div>
+                    </div>
+                </div>
+                <!-- #################### -->
+        </article>
+    </section>
+
+    <h2><span>Mes compétences</span></h2>
+    <section class="trois-col">
+        <article class="text-center col1">
+            <i class="fa fa-desktop custom" aria-hidden="true"></i>
+            <h3>Front Development</h3>
+            <p>
+            <ul>
+                <li>Integration maquette</li>
+                <li>Animation CSS</li>
+                <li>Développement JavaScript</li>
+            </ul>
+            </p>
+        </article>
+        <article class="text-center col2">
+            <i class="fa fa-code custom" aria-hidden="true"></i>
+            <h3>Back Development</h3>
+            <p>
+            <ul>
+                <li>Développement PHP</li>
+                <li>Application Web</li>
+                <li>Test unitaire / fonctionnel</li>
+            </ul>
+            </p>
+        </article>
+        <article class="text-center col3">
+            <i class="fa fa-comment-o custom" aria-hidden="true"></i>
+            <h3>Optimisation</h3>
+            <p>
+            <ul>
+                <li>SEO</li>
+                <li>Responsive Web</li>
+            </ul>
+            </p>
+        </article>
+    </section>
+
+    <h2><span>Mes projets</span></h2>
+    <section class="deux-col">
+        <article>
+            <a href="cerisol.html" title="lien vers mon projet cerisol">
+                <div class="overlay_container border">
+                    <div class="overlay"></div>
+                    <img src="img/cerisol.jpeg" alt="Capture d'ecran du projet Cerisol">
+                </div>
+            </a>
+            <p class="legend">Cerisol - Web</p>
+        </article>
+        <article>
+            <a href="jeu_nintendo_ds.html" title="lien vers mon jeu nintendo ds">
+                <div class="overlay_container border">
+                    <div class="overlay"></div>
+                    <img src="img/nintendo_ds.jpeg" alt="Capture d'ecran de mon jeu sur nintendo ds">
+                </div>
+            </a>
+            <p class="legend">Nintendo DS - Jeux</p>
+        </article>
+        <article>
+            <a href="tower_defense.html" title="lien vers mon jeu de tower defense">
+                <div class="overlay_container border">
+                    <div class="overlay"></div>
+                    <img src="img/tower_defense.jpeg" alt="Capture d'ecran de mon jeux de tower defense">
+                </div>
+            </a>
+            <p class="legend">Tower Defense - Jeux</p>
+        </article>
+        <article>
+            <a href="banque.html" title="lien vers mon projet web de gestion compte banque">
+                <div class="overlay_container border">
+                    <div class="overlay"></div>
+                    <img src="img/banque.jpeg" alt="Capture d'ecran de mon projet de gestion de budget et de depense">
+                </div>
+            </a>
+            <p class="legend">Compte Banque - Web</p>
+        </article>
+        <article>
+            <!-- Empty -->
+        </article>
+        <article class="conteneur-right">
+            <a href="portfolio.html" class="btn conteneur-right" title="Lien vers mon portfolio">Voir mon portfolio</a>
+        </article>
+    </section>
+
+</div>
+
+<footer>
+    <div class="container">
+
+    </div>
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="js/slider.js"></script>
+</body>
+</html>
